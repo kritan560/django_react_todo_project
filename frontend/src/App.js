@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Switch, Route, Link } from 'react-router-dom' // in dom@6^ we use Routes instead of Switch
+import { Switch, Route, Link, useHistory } from 'react-router-dom' // in dom@6^ we use Routes instead of Switch
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AddTodo from "./components/add-todo";
 import Login from "./components/login";
@@ -12,23 +12,18 @@ import Navbar from 'react-bootstrap/Navbar';
 import TodoDataService from "./services/todos";
 
 function App() {
-  const [user, setUser] = useState(null)
+  const navigate_to = useHistory()
+  const [userName, setUser] = useState(null)
   const [token, setToken] = React.useState(localStorage.getItem('token'))
   const [error, setError] = React.useState('')
-
-  console.log('Token in App', token)
-  let tok = localStorage.getItem('token')
-  console.log('token', tok)
 
   // 1st load login.jsx and the it ask for username and password and return it via props to login function (app.js) and 2nd further app.js runs with login function where tododataservice api class login method which takes username and password then returns the response.
   async function login(user) {
     //default user to null
-    TodoDataService.login(user)
+    await TodoDataService.login(user)
       .then(response => {
         setToken(response.data.token) // it gets token from views.py return JsonResponse({'token':str(token)}, status=201)
-        setUser(user.username); // it gets username from login.jsx. where it send the json format username and password
-        console.log('user.username', user.username)
-        console.log(response)
+        setUser(user.username) // it gets username from login.jsx. where it send the json format username and password
         localStorage.setItem('token', response.data.token); // can use getItem to take the token
         localStorage.setItem('user', user.username);// can use get item to get username
         setError('');
@@ -44,6 +39,7 @@ function App() {
     setUser('')
     localStorage.setItem('token', '')
     localStorage.setItem('user', '')
+    navigate_to.push('/')
   }
 
   async function signup(user = null) {
@@ -71,7 +67,7 @@ function App() {
             <Container>
               <Link className="nav-link" to="/todos/">Todos</Link>
               {token ? (
-                <Link className="nav-link" onClick={logout}>Logout ({localStorage.getItem('user')})</Link>
+                <Link to='/#' className="nav-link" onClick={logout}>Logout ({localStorage.getItem('user')})</Link>
               ) : (
                 <>
                   <Link className="nav-link" to="/login/">Login</Link>

@@ -10,6 +10,7 @@ const AddTodo = props => {
     let initialTodoTitle = "";
     let initialTodoMemo = "";
 
+    // console.log('props.location.state', props)
     if (props.location.state && props.location.state.currentTodo) {
         editing = true;
         initialTodoTitle = props.location.state.currentTodo.title;
@@ -40,7 +41,6 @@ const AddTodo = props => {
                 data, props.token)
                 .then((response) => {
                     setSubmitted(true);
-                    console.log(response.data)
                 })
                 .catch((e) => {
                     console.log(e);

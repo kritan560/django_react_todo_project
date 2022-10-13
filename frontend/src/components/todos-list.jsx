@@ -8,6 +8,7 @@ import { Alert } from 'react-bootstrap';
 import moment from 'moment'
 
 const TodosList = (props) => {
+
     const [todos, setTodos] = useState([]);
 
     useEffect(() => {
@@ -16,12 +17,12 @@ const TodosList = (props) => {
 
     const retrieveTodos = () => {
         TodoDataService.getAll(props.token).then((response) => {
-            console.log(response)
             setTodos(response.data)
         }).catch((error) => {
-            console.log(error)
+            console.log('something went wrong...')
         })
     }
+
     const deleteTodo = (todoId) => {
         TodoDataService.deleteTodo(todoId, props.token).then((response) => {
             retrieveTodos()

@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import  'react-router-dom'
 
 const Login = (props) => {
-
+    
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -25,7 +25,7 @@ const Login = (props) => {
         <Container>
             <Form>
                 <Form.Group className="mb-3">
-                    <Form.Label>Username {username}</Form.Label>
+                    <Form.Label>Username</Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter username"
@@ -34,7 +34,7 @@ const Login = (props) => {
                     />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                    <Form.Label>Password {password}</Form.Label>
+                    <Form.Label>Password</Form.Label>
                     <Form.Control
                         type="password"
                         placeholder="Enter password"
