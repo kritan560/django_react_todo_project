@@ -10,6 +10,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 import TodoDataService from "./services/todos";
+import PageNotFound from "./components/PageNotFound";
+import NotLoggedin from "./components/NotLoggedIn";
+import AlreadyLoggedIn from "./components/AlreadyLoggedIn";
 
 function App() {
   const navigate_to = useHistory()
@@ -58,6 +61,15 @@ function App() {
       })
   }
 
+  function isAuth() {
+    if (localStorage.getItem('token').length > 1) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+
   return (
     <div className="App">
       <Navbar bg="warning" variant="light">
@@ -65,13 +77,13 @@ function App() {
           <Navbar.Brand>TodosApp</Navbar.Brand>
           <Nav className="me-auto">
             <Container>
-              <Link className="nav-link" to="/todos/">Todos</Link>
+              <Link className="nav-link" to="/todos">Todos</Link>
               {token ? (
                 <Link to='/#' className="nav-link" onClick={logout}>Logout ({localStorage.getItem('user')})</Link>
               ) : (
                 <>
-                  <Link className="nav-link" to="/login/">Login</Link>
-                  <Link className="nav-link" to="/signup/">Sign Up</Link>
+                  <Link className="nav-link" to="/login">Login</Link>
+                  <Link className="nav-link" to="/signup">Sign Up</Link>
                 </>
               )}
             </Container>
@@ -80,37 +92,31 @@ function App() {
       </Navbar>
       <div className="container mt-4">
         <Switch>
-          <Route exact path={['/', '/todos/']} render={(props) =>
-            <TodosList {...props} token={token} />
-          }>
-          </Route>
-          <Route path="/todos/create/" render={(props) =>
-            <AddTodo {...props} token={token} />
-          }>
-          </Route>
-          <Route path="/todos/:id/" render={(props) =>
-            <AddTodo {...props} token={token} />
-          }>
-          </Route>
-          <Route path="/login/" render={(props) =>
-            <Login {...props} login={login} />
-          }>
-          </Route>
-          <Route path="/signup/" render={(props) =>
-            <Signup {...props} signup={signup} />
-          }>
-          </Route>
+
+          <Route path="/login" render={(props) => localStorage.getItem('token').length > 0 ? <AlreadyLoggedIn /> : <Login {...props} login={login} />}></Route>
+
+          <Route path="/signup" render={(props) => <Signup {...props} signup={signup} />}></Route>
+
+          <Route exact path={['/', '/todos']} render={(props) => <TodosList {...props} token={token} />}></Route>
+
+          <Route path={'/todos/create'} render={(props) => <AddTodo {...props} token={token} />}></Route>
+
+          <Route path="/todos/:id" render={(props) => <AddTodo {...props} token={token} />}></Route>
+
+          {/* <Route path="/login" render={(props) => <Login {...props} login={login} />}></Route> */}
+
+          <Route path="*" render={PageNotFound}></Route>
+
         </Switch>
       </div>
-      <footer className="text-center text-lg-start
-    bg-light text-muted mt-4 fixed-bottom">
+
+      <footer className="text-center text-lg-start bg-light text-muted mt-4 fixed-bottom">
         <div className="text-center p-4">
-          © Copyright - <a
+          © Copyright -
+          <a
             // target="_blank"
             className="text-reset fw-bold text-decoration-none"
-            href="https://twitter.com/KritanShresth13"
-          >
-            Kritan Shrestha
+            href="https://twitter.com/KritanShresth13"> Kritan Shrestha
           </a>
         </div>
       </footer>

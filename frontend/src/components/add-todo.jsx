@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import { Alert } from 'react-bootstrap';
+import {useHistory} from 'react-router-dom'
 
 const AddTodo = props => {
+    let navigate_to = useHistory()
     let editing = false;
     let initialTodoTitle = "";
     let initialTodoMemo = "";
@@ -58,6 +61,12 @@ const AddTodo = props => {
     }
     return (
         <Container>
+            {props.token == null || props.token === "" ? (
+                <Alert variant='warning'>
+                    You are not log in please <Link to='/login/'>Login</Link> to create todos
+                    {/* {navigate_to.push('/todos/create')} */}
+                </Alert>
+            ) : (<>
             {submitted ? (
                 <div>
                     <h4>Todo submitted successfully</h4>
@@ -91,6 +100,7 @@ const AddTodo = props => {
                     </Button>
                 </Form>
             )}
+            </>)}
         </Container>
     )
 }
