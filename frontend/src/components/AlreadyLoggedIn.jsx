@@ -1,11 +1,12 @@
-import { Alert } from "react-bootstrap"
-import { Link } from "react-router-dom"
-
+import { Alert, Button } from "react-bootstrap"
 
 const AlreadyLoggedIn = () => {
     return (
         <div>
-            <Alert> User Already logged In <Alert.Link href="http://localhost:3000/"> See Todos</Alert.Link></Alert>
+            <h2>User already logged In</h2>
+            <Alert.Link href="http://localhost:3000/todos">
+                <Button variant="warning">Continue</Button>
+            </Alert.Link>
         </div>
     )
 }

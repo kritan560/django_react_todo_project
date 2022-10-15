@@ -11,22 +11,22 @@ import Navbar from 'react-bootstrap/Navbar';
 
 import TodoDataService from "./services/todos";
 import PageNotFound from "./components/PageNotFound";
-import NotLoggedin from "./components/NotLoggedIn";
+// import NotLoggedin from "./components/NotLoggedIn";
 import AlreadyLoggedIn from "./components/AlreadyLoggedIn";
 
 let trapLocation = []
 function App() {
   const navigate_to = useHistory()
+  // eslint-disable-next-line
   const [userName, setUser] = useState(null)
   const [token, setToken] = React.useState(localStorage.getItem('token'))
+  // eslint-disable-next-line
   const [error, setError] = React.useState('')
   let location = useLocation()
   trapLocation.push(location.pathname)
   if (trapLocation.length > 2) {
     trapLocation = []
   }
-  console.log('traplocation', trapLocation.length)
-  console.log(trapLocation)
   
   // 1st load login.jsx and the it ask for username and password and return it via props to login function (app.js) and 2nd further app.js runs with login function where tododataservice api class login method which takes username and password then returns the response.
   async function login(user) {
@@ -70,10 +70,6 @@ function App() {
       })
   }
 
-  function getById(){
-    TodoDataService.getById()
-  }
-
   return (
     <div className="App">
       <Navbar bg="warning" variant="light">
@@ -97,15 +93,15 @@ function App() {
       <div className="container mt-4">
         <Switch>
 
-          <Route path="/login" render={(props) => localStorage.getItem('token').length > 0 ? <AlreadyLoggedIn /> : <Login {...props} login={login} />}></Route>
+          <Route exact path="/login" render={(props) => localStorage.getItem('token').length > 0 ? <AlreadyLoggedIn /> : <Login {...props} login={login} />}></Route>
 
-          <Route path="/signup" render={(props) => <Signup {...props} signup={signup} />}></Route>
+          <Route exact path="/signup" render={(props) => <Signup {...props} signup={signup} />}></Route>
 
           <Route exact path={['/', '/todos']} render={(props) => <TodosList {...props} token={token} />}></Route>
 
-          <Route path={'/todos/create'} render={(props) => <AddTodo {...props} token={token} />}></Route>
+          <Route exact path='/todos/create' render={(props) => <AddTodo {...props} token={token} />}></Route>
 
-          <Route path="/todos/:id" render={(props) => <AddTodo {...props} token={token} />}></Route>
+          <Route exact path="/todos/:id" render={(props) => <AddTodo {...props} token={token} />}></Route>
 
           {/* <Route path="/login" render={(props) => <Login {...props} login={login} />}></Route> */}
 

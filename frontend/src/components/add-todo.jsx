@@ -5,14 +5,14 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { Alert } from 'react-bootstrap';
-import {useHistory} from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 
 const AddTodo = props => {
-    let navigate_to = useHistory()
+    // let navigate_to = useHistory()
     let editing = false;
     let initialTodoTitle = "";
     let initialTodoMemo = "";
-    let urlUser = true;
+    // let urlUser = false;
 
     // console.log('props.location.state', props)
     if (props.location.state && props.location.state.currentTodo) {
@@ -20,9 +20,9 @@ const AddTodo = props => {
         initialTodoTitle = props.location.state.currentTodo.title;
         initialTodoMemo = props.location.state.currentTodo.memo;
     }
-    else{
-        urlUser = true
-    }
+    // else {
+    //     urlUser = true
+    // }
 
     const [title, setTitle] = useState(initialTodoTitle);
     const [memo, setMemo] = useState(initialTodoMemo);
@@ -65,49 +65,49 @@ const AddTodo = props => {
     }
     return (
         <Container>
-            {urlUser? <Alert variant='danger'>
-                    You cannot alter todos via pasting url visit <Alert.Link href='http://localhost:3000/todos'>Todo list</Alert.Link> and click edit button to Alter Post. if not logged in visit <Alert.Link href="http://localhost:3000/login">Login</Alert.Link>
-                </Alert>:(<>
+            {/* {urlUser ? <Alert variant='danger'>
+                You cannot alter todos via pasting url visit <Alert.Link href='http://localhost:3000/todos'>Todo list</Alert.Link> and click edit button to Alter Post. if not logged in visit <Alert.Link href="http://localhost:3000/login">Login</Alert.Link>
+            </Alert> : (<> */}
             {props.token == null || props.token === "" ? (
                 <Alert variant='warning'>
                     You are not log in please <Link to='/login/'>Login</Link> to create todos
                 </Alert>
             ) : (<>
-            {submitted ? (
-                <div>
-                    <h4>Todo submitted successfully</h4>
-                    <Link to={"/todos/"}>
-                        Back to Todos
-                    </Link>
-                </div>
-            ) : (
-                <Form>
-                    <Form.Group className="mb-3">
-                        <Form.Label>{editing ? "Edit" : "Create"} Todo</Form.Label>
-                        <Form.Control
-                            type="text"
-                            required
-                            placeholder="e.g. buy gift tomorrow"
-                            value={title}
-                            onChange={onChangeTitle}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Description</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={3}
-                            value={memo}
-                            onChange={onChangeMemo}
-                        />
-                    </Form.Group>
-                    <Button variant="success" onClick={saveTodo}>
-                        {editing ? "Edit" : "Add"} To-do
-                    </Button>
-                </Form>
-            )}
+                {submitted ? (
+                    <div>
+                        <h4>Todo submitted successfully</h4>
+                        <Link to={"/todos/"}>
+                            Back to Todos
+                        </Link>
+                    </div>
+                ) : (
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>{editing ? "Edit" : "Create"} Todo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                required
+                                placeholder="e.g. buy gift tomorrow"
+                                value={title}
+                                onChange={onChangeTitle}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={3}
+                                value={memo}
+                                onChange={onChangeMemo}
+                            />
+                        </Form.Group>
+                        <Button variant="success" onClick={saveTodo}>
+                            {editing ? "Edit" : "Add"} To-do
+                        </Button>
+                    </Form>
+                )}
             </>)}
-            </>)}
+            {/* </>)} */}
         </Container>
     )
 }
