@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TodoDataService from '../services/todos';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -10,6 +10,7 @@ import moment from 'moment'
 const TodosList = (props) => {
 
     const [todos, setTodos] = useState([]);
+    const location = useLocation()
 
     useEffect(() => {
         retrieveTodos();
@@ -58,7 +59,7 @@ const TodosList = (props) => {
                                     }
                                 }}>
                                     <Button variant="primary" className="me-2">
-                                        Editing
+                                        Edit
                                     </Button>
                                 </Link>
                                 <Button onClick={() => deleteTodo(todo.id)} variant="danger">

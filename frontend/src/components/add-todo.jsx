@@ -12,12 +12,16 @@ const AddTodo = props => {
     let editing = false;
     let initialTodoTitle = "";
     let initialTodoMemo = "";
+    let urlUser = true;
 
     // console.log('props.location.state', props)
     if (props.location.state && props.location.state.currentTodo) {
         editing = true;
         initialTodoTitle = props.location.state.currentTodo.title;
         initialTodoMemo = props.location.state.currentTodo.memo;
+    }
+    else{
+        urlUser = true
     }
 
     const [title, setTitle] = useState(initialTodoTitle);
@@ -61,10 +65,12 @@ const AddTodo = props => {
     }
     return (
         <Container>
+            {urlUser? <Alert variant='danger'>
+                    You cannot alter todos via pasting url visit <Alert.Link href='http://localhost:3000/todos'>Todo list</Alert.Link> and click edit button to Alter Post. if not logged in visit <Alert.Link href="http://localhost:3000/login">Login</Alert.Link>
+                </Alert>:(<>
             {props.token == null || props.token === "" ? (
                 <Alert variant='warning'>
                     You are not log in please <Link to='/login/'>Login</Link> to create todos
-                    {/* {navigate_to.push('/todos/create')} */}
                 </Alert>
             ) : (<>
             {submitted ? (
@@ -100,6 +106,7 @@ const AddTodo = props => {
                     </Button>
                 </Form>
             )}
+            </>)}
             </>)}
         </Container>
     )

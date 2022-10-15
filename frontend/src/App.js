@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Switch, Route, Link, useHistory } from 'react-router-dom' // in dom@6^ we use Routes instead of Switch
+import { Switch, Route, Link, useHistory, useLocation } from 'react-router-dom' // in dom@6^ we use Routes instead of Switch
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AddTodo from "./components/add-todo";
 import Login from "./components/login";
 import TodosList from "./components/todos-list";
-import Signup from "./components/signup";
+import Signup from "./components/Signup";
 import Container from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -14,12 +14,20 @@ import PageNotFound from "./components/PageNotFound";
 import NotLoggedin from "./components/NotLoggedIn";
 import AlreadyLoggedIn from "./components/AlreadyLoggedIn";
 
+let trapLocation = []
 function App() {
   const navigate_to = useHistory()
   const [userName, setUser] = useState(null)
   const [token, setToken] = React.useState(localStorage.getItem('token'))
   const [error, setError] = React.useState('')
-
+  let location = useLocation()
+  trapLocation.push(location.pathname)
+  if (trapLocation.length > 2) {
+    trapLocation = []
+  }
+  console.log('traplocation', trapLocation.length)
+  console.log(trapLocation)
+  
   // 1st load login.jsx and the it ask for username and password and return it via props to login function (app.js) and 2nd further app.js runs with login function where tododataservice api class login method which takes username and password then returns the response.
   async function login(user) {
     //default user to null
@@ -30,6 +38,7 @@ function App() {
         localStorage.setItem('token', response.data.token); // can use getItem to take the token
         localStorage.setItem('user', user.username);// can use get item to get username
         setError('');
+        navigate_to.push(trapLocation[0])
       })
       .catch(e => {
         console.log('login', e);
@@ -61,13 +70,8 @@ function App() {
       })
   }
 
-  function isAuth() {
-    if (localStorage.getItem('token').length > 1) {
-      return true
-    }
-    else {
-      return false
-    }
+  function getById(){
+    TodoDataService.getById()
   }
 
   return (

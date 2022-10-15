@@ -36,6 +36,11 @@ class TodoDataService {
         return axios.post(`http://localhost:8000/api/signup/`, data)
     }
 
+    getById(id, token){
+        axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+        return axios.get(`https://localhost:8000/api/todos/${id}`)
+    }
+
 }
 
 // eslint-disable-next-line
