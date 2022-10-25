@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import AddTodo from "./components/add-todo";
 import Login from "./components/login";
 import TodosList from "./components/todos-list";
-import Signup from "./components/Signup";
+import Signup from "./components/signup";
 import Container from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
