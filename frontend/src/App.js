@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import AddTodo from "./components/add-todo";
 import Login from "./components/login";
 import TodosList from "./components/todos-list";
-import Signup from "./components/signup";
+import Signup from "./components/Signup";
 import Container from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -110,7 +110,7 @@ function App() {
         </Switch>
       </div>
 
-      <footer className="text-center text-lg-start bg-light text-muted mt-4 fixed-bottom">
+      <footer className="text-center text-lg-start bg-light text-muted mt-4 sticky-bottom">
         <div className="text-center p-4">
           © Copyright -
           <a
